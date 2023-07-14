@@ -7,7 +7,6 @@
         {% block stylesheets %}
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
         {% endblock %}
-
         {% block javascripts %}
         <script defer src="{{ asset('js/index.js') }}"></script>
         {% endblock %}
@@ -20,7 +19,7 @@
     
     <body class="d-flex flex-column">
         {{ include('partials/_header.html.twig') }}
-        <div class="flex-fill d-flex flex-row-nowrap justify-content-center">
+        <div class="app-content flex-fill d-flex flex-row-nowrap justify-content-center">
             <div class="content d-flex flex-fill flex-row-nowrap py-50">
                 {{ include('partials/_sidebar.html.twig') }}
                 <div class="flex-fill">
