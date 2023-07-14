@@ -13,8 +13,9 @@ class HomeController extends AbstractController
     {
         $questions = [
             [
+            'id' => '1',
             'title' => 'Je suis une super question',
-            'content' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum voluptatum harum quo similique neque quam, adipisci tenetur facere. Odio ducimus tenetur distinctio in accusantium beatae fugit vel blanditiis omnis aspernatur!',
+            'content' => '1 Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum voluptatum harum quo similique neque quam, adipisci tenetur facere. Odio ducimus tenetur distinctio in accusantium beatae fugit vel blanditiis omnis aspernatur!',
             'rating' => 20,
             'author' => [
                 'name' => 'Mathilde Blabla',
@@ -23,8 +24,9 @@ class HomeController extends AbstractController
             'nbrOfResponse' => 15
         ],
         [
+            'id' => '2',
             'title' => 'Je suis une super question',
-            'content' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum voluptatum harum quo similique neque quam, adipisci tenetur facere. Odio ducimus tenetur distinctio in accusantium beatae fugit vel blanditiis omnis aspernatur!',
+            'content' => '2 Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum voluptatum harum quo similique neque quam, adipisci tenetur facere. Odio ducimus tenetur distinctio in accusantium beatae fugit vel blanditiis omnis aspernatur!',
             'rating' => 0,
             'author' => [
                 'name' => 'Camila Toto',
@@ -33,8 +35,9 @@ class HomeController extends AbstractController
             'nbrOfResponse' => 15
         ],
         [
+            'id' => '3',
             'title' => 'Je suis une super question',
-            'content' => 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum voluptatum harum quo similique neque quam, adipisci tenetur facere. Odio ducimus tenetur distinctio in accusantium beatae fugit vel blanditiis omnis aspernatur!',
+            'content' => '3 Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum voluptatum harum quo similique neque quam, adipisci tenetur facere. Odio ducimus tenetur distinctio in accusantium beatae fugit vel blanditiis omnis aspernatur!',
             'rating' => -15,
             'author' => [
                 'name' => 'Solene Denie',
