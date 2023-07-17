@@ -49,6 +49,7 @@ class QuestionController extends AbstractController
             $comment->setCreatedAt(new \DateTimeImmutable());
             $comment->setRating(0);
             $comment->setQuestion($question);
+            $question->setNbrOfReponse($question->getNbrOfReponse() + 1);
             $em->persist($comment);
             $em->flush();
             $this->addFlash('success', 'Votre réponse a bien été ajoutée');
