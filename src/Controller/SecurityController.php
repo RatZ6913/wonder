@@ -17,6 +17,10 @@ class SecurityController extends AbstractController
     #[Route('/signup', name: 'signup')]
     public function signup(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): Response
     {
+        // if ($this->getUser()) {
+        //     return $this->redirectToRoute('app_home');
+        // }
+
         $user = new User();
         $userForm = $this->createForm(UserType::class, $user);
         $userForm->handleRequest($request);
@@ -38,7 +42,7 @@ class SecurityController extends AbstractController
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
         if ($this->getUser()) {
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('app_home');
         }
 
         $error = $authenticationUtils->getLastAuthenticationError();

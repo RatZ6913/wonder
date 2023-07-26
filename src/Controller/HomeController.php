@@ -13,7 +13,6 @@ class HomeController extends AbstractController
     #[Route('/', name: 'app_home')]
     public function index(QuestionRepository $questionRepository): Response
     {
-        // $questionRepo = $this->getDoctrine()->getRepository(Question::class);
         $questions = $questionRepository->findAll();
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
@@ -21,6 +20,3 @@ class HomeController extends AbstractController
         ]);
     }
 }
-
-// https://randomuser.me/api/portraits/women/32.jpg
-// https://randomuser.me/api/portraits/women/57.jpg
