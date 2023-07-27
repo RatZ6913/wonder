@@ -142,6 +142,10 @@ small {
   margin-right: 50px;
 }
 
+.mb-10 {
+  margin-bottom: 10px;
+}
+
 .mb-20 {
   margin-bottom: 20px;
 }
@@ -383,4 +387,10 @@ footer {
 .question-text, .question-response-text {
   line-height: var(--line-height-hight);
   white-space: pre-wrap;
+}
+
+/* user profile  */
+.profile-picture {
+  width: 150px;
+  border-radius: var(--border-radius);
 }
