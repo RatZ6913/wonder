@@ -7,6 +7,7 @@ use App\Entity\Question;
 use App\Entity\Vote;
 use App\Form\CommentType;
 use App\Form\QuestionType;
+use App\Repository\QuestionRepository;
 use App\Repository\VoteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -45,8 +46,10 @@ class QuestionController extends AbstractController
     }
 
     #[Route('/question/{id}', name: 'question_show')]
-    public function show(Request $request, Question $question, EntityManagerInterface $em): Response
+    public function show(Request $request, QuestionRepository $questionRepo, int $id, EntityManagerInterface $em): Response
     {
+        $question = $questionRepo->getQuestionsWithCommentsAndAuthors($id);
+
         $options = [
             'question' => $question
         ];
@@ -145,5 +148,4 @@ class QuestionController extends AbstractController
         return $referer ? $this->redirect($referer) : $this->redirectToRoute('app_home');
     }
 }
-
 
