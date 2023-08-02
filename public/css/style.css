@@ -311,6 +311,10 @@ small {
   color: #fff;
 }
 
+.flash-error {
+  background-color: var(--warning);
+}
+
 .flash-success {
   background-color: var(--success);
 }
