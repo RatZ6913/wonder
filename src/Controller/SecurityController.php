@@ -16,6 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\RateLimiter\RateLimiterFactory;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Validator\Constraints\Length;
@@ -74,9 +75,15 @@ class SecurityController extends AbstractController
     }
 
     #[Route('reset-password/{token}', name: 'reset-password')]
-    public function resetPassword(UserPasswordHasherInterface $userPasswordHasher, Request $request, EntityManagerInterface $em, string $token, ResetPasswordRepository $resetPasswordRepository)
+    public function resetPassword(RateLimiterFactory $passwordRecoveryLimiter, UserPasswordHasherInterface $userPasswordHasher, Request $request, EntityManagerInterface $em, string $token, ResetPasswordRepository $resetPasswordRepository)
     {
-        $resetPassword = $resetPasswordRepository->findOneBy(['token' => $token]);
+        $limiter = $passwordRecoveryLimiter->create($request->getClientIp());
+        if(false === $limiter->consume(1)->isAccepted()) {
+           $this->addFlash('error', 'Vous devez attendre 1 heure pour refaire une tentative.');
+           return $this->redirectToRoute('login');
+        }
+
+        $resetPassword = $resetPasswordRepository->findOneBy(['token' => sha1($token)]);
         if(!$resetPassword || $resetPassword->getExpiredAt() < new \DateTime('now')) {
             if($resetPassword) {
                 $em->remove($resetPassword);
@@ -117,8 +124,14 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/reset-password-request', name: 'reset-password-request')]
-    public function resetPasswordRequest(MailerInterface $mailer, Request $request, UserRepository $userRepository, ResetPasswordRepository $resetPasswordRepository, EntityManagerInterface $em)
+    public function resetPasswordRequest(RateLimiterFactory $passwordRecoveryLimiter, MailerInterface $mailer, Request $request, UserRepository $userRepository, ResetPasswordRepository $resetPasswordRepository, EntityManagerInterface $em)
     {
+        $limiter = $passwordRecoveryLimiter->create($request->getClientIp());
+         if(false === $limiter->consume(1)->isAccepted()) {
+            $this->addFlash('error', 'Vous devez attendre 1 heure pour refaire une tentative.');
+            return $this->redirectToRoute('login');
+         }
+
         $emailForm = $this->createFormBuilder()->add('email', EmailType::class, [
             'constraints' => [
                 new NotBlank([
@@ -140,8 +153,8 @@ class SecurityController extends AbstractController
                 $resetPassword = new ResetPassword();
                 $resetPassword->setUser($user);
                 $resetPassword->setExpiredAt(new \DateTimeImmutable('+2 hours'));
-                $token = substr(str_replace(['+', '/', '='], '',base64_encode(random_bytes(30))), 0, 20);
-                $resetPassword->setToken($token);
+                $token = substr(str_replace(['+', '/', '='], '', base64_encode(random_bytes(30))), 0, 20);
+                $resetPassword->setToken(sha1($token));
                 $em->persist($resetPassword);
                 $em->flush();
                 $email = new TemplatedEmail();
