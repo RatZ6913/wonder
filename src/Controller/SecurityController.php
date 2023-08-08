@@ -31,6 +31,12 @@ class SecurityController extends AbstractController
         $userForm = $this->createForm(UserType::class, $user);
         $userForm->handleRequest($request);
         if ($userForm->isSubmitted() && $userForm->isValid()) {
+            $picture = $userForm->get('pictureFile')->getData();
+            $folder = $this->getParameter('profile.folder');
+            $ext = $picture->guessExtension() ?? 'bin';
+            $fileName = bin2hex(random_bytes(10)) . '.' . $ext;
+            $picture->move($folder, $fileName);
+            $user->setPicture($this->getParameter('profile.folder.public_path') . '/' . $fileName);
             $user->setPassword($passwordHasher->hashPassword($user, $user->getPassword()));
             $em->persist($user);
             $em->flush();
