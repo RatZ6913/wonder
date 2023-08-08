@@ -78,6 +78,17 @@ class QuestionController extends AbstractController
         return $this->render('question/show.html.twig', $options);
     }
 
+    #[Route('question/search/{search}', name: 'question_search', priority: 1)]
+    public function questionSearch(string $search = "none", QuestionRepository $questionRepository)
+    {
+        if($search === "none") {
+            $questions = [];
+        } else {
+            $questions = $questionRepository->findBySearch($search);
+        }
+        return $this->json(json_encode($questions));
+    }
+
     #[Route('/question/rating/{id}/{score}', name: 'question_rating')]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function ratingQuestion(Request $request, Question $question, VoteRepository $voteRepo, int $score, EntityManagerInterface $em) {

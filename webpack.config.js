@@ -26,7 +26,7 @@ Encore
 
     .copyFiles({
         from: './assets/images',
-        pattern: /\.(png|jpg|jpeg|svg)$/,
+        pattern: /\.(png|jpg|jpeg|svg|gif)$/,
         to: 'images/[path][name].[ext]'
     })
 
@@ -66,7 +66,7 @@ Encore
 
     // uncomment if you use TypeScript
     .enableTypeScriptLoader()
-
+    .enableVueLoader()
 
     // uncomment if you use React
     //.enableReactPreset()
