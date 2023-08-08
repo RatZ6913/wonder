@@ -1,0 +1,18 @@
+/* question  */
+.question-content {
+  border-radius: var(--border-radius);
+}
+
+.rating-up {
+  color: var(--primary);
+}
+
+.rating-down {
+  color: var(--warning);
+}
+
+.question-text, .question-response-text {
+  line-height: var(--line-height-hight);
+  white-space: pre-wrap;
+}
+

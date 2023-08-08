@@ -1,0 +1,14 @@
+/* flash  */
+.flash {
+  padding: 20px;
+  text-align: center;
+  color: #fff;
+}
+
+.flash-error {
+  background-color: var(--warning);
+}
+
+.flash-success {
+  background-color: var(--success);
+}
