@@ -2,7 +2,7 @@
 
 {% block styleSheets %}
   {{ parent() }}
-  {{ encore_entry_links_tags('question_show') }}
+  {{ encore_entry_link_tags('question_show') }}
 {% endblock %}
 
 {% block title %}{{ question.title }}{% endblock %}

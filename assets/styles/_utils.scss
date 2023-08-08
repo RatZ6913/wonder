@@ -1,3 +1,5 @@
+@use "mixin" as *;
+
 /* flex */
 .d-flex {
   display: flex;
@@ -13,6 +15,11 @@
 
 .flex-column {
   flex-direction: column;
+  &-xs {
+    @include xs {
+      flex-direction: column;
+    }
+  }
 }
 
 .align-items-center {
@@ -118,4 +125,21 @@
 .py-50 {
   padding-top: 50px;
   padding-bottom: 50px;
+}
+
+.hide-xs {
+  @include xs {
+    display: none;
+  }
+}
+
+.show-xs {
+  display: none;
+  @include xs {
+    display: inherit;
+  }
+}
+
+.hidden {
+  display: none;
 }

@@ -28,3 +28,7 @@ small {
   font-size: var(--font-size-small);
   font-family: var(--font-family);
 }
+
+input[type="file"] {
+  width: 100%;
+}
